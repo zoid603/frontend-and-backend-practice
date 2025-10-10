@@ -7,13 +7,21 @@ body {
     min-height: 100vh; /* Минимальная высота равна высоте окна браузера */ 
 }
 /* ===== КОНТЕЙНЕР СТРАНИЦЫ ===== */
-.page-container { 
-    max-width: 1200px; /* Максимальная ширина контента */ 
-    margin: 0 auto; /* Центрирование контейнера по горизонтали */ 
-    background: white; /* Белый фон для основного содержимого */ 
-    min-height: 100vh; /* Минимальная высота равна высоте окна браузера */ 
-    box-shadow: 0 0 30px rgba(0,0,0,0.1); /* Легкая тень вокруг всего контента */ 
-}
+ .page-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    background: white; 
+    min-height: 100vh; 
+    box-shadow: 0 0 30px rgba(0,0,0,0.1); 
+    /* Новое: Сеточный макет для семантических областей */ 
+    display: grid; 
+    grid-template-rows: auto auto 1fr auto; 
+    grid-template-areas:  
+    "header" 
+    "nav" 
+    "main" 
+    "footer"; 
+} 
 
 /* ===== ШАПКА ===== */
 .header { 
@@ -25,12 +33,14 @@ body {
     font-size: 28px; /* Размер шрифта */ 
     font-weight: 300; /* Легкое начертание шрифта */ 
     letter-spacing: 2px; /* Расстояние между буквами */ 
+    grid-area: header; 
 } 
 
 /* ===== НАВИГАЦИЯ ===== */
 .nav { 
     background: #2c3e50; /* Темно-синий фон навигации */ 
     padding: 20px 0; /* Вертикальные отступы */ 
+    grid-area: nav;
 } 
 .nav-list { 
     list-style: none; /* Убираем маркеры списка */ 
@@ -60,13 +70,15 @@ body {
 }
 
 /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
-.content { 
-    padding: 40px; /* Внутренние отступы контента */ 
-    max-width: 900px; /* Максимальная ширина контента */ 
-    margin: 0 auto;
-} 
+ main.content { 
+    padding: 40px; 
+    max-width: 900px; 
+    margin: 0 auto; 
+    /* Новое: Привязка к области сетки */ 
+    grid-area: main; 
+}  
 /* ===== ГЛАВНАЯ СТРАНИЦА ===== */
-    .profile-header { 
+.profile-header { 
     text-align: center; /* Выравнивание по центру */ 
     margin-bottom: 40px; /* Отступ снизу */ 
 } 
@@ -109,15 +121,14 @@ body {
 } 
 
 /* ===== НАВЫКИ ===== */
- .skills-container { 
-    display: flex; /* Горизонтальное расположение навыков */ 
-    justify-content: center; /* Выравнивание по центру */ 
-    flex-wrap: wrap; /* Перенос на новую строку при необходимости */ 
-    gap: 15px; /* Расстояние между навыками */ 
-    margin: 30px 0; /* Вертикальные отступы */ 
-} 
+ .skills-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    gap: 15px; 
+    margin: 20px 0; 
+}  
 
- .skill-tag { 
+.skill-tag { 
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Голубой градиентный фон */ 
     color: white; /* Белый цвет текста */ 
     padding: 12px 25px; /* Внутренние отступы */ 
@@ -133,8 +144,7 @@ body {
     наведении */ 
 } 
 
-/*===== ОПЫТ РАБОТЫ ===== */
- .experience-section { 
+.experience-section { 
     margin-top: 50px; /* Отступ сверху */ 
 } 
 .section-title { 
@@ -144,6 +154,13 @@ body {
     margin-bottom: 30px; /* Отступ снизу */ 
     font-weight: 300; /* Легкое начертание шрифта */ 
 } 
+
+.experience-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 20px; 
+} 
+
 .experience-card { 
     background: white; /* Белый фон карточки */ 
     padding: 25px; /* Внутренние отступы */ 
@@ -172,19 +189,19 @@ body {
 /* ==== НОВОСТИ ==== */
 .news-block{
     background: white; /* Белый фон карточки */ 
-    padding: 20px; /* Внутренние отступы */ 
-    margin: 15px 0; /* Вертикальные отступы */ 
+    padding: 20px; /* Внутренние отступы */  
     border-radius: 10px; /* Скругленные углы */ 
     box-shadow: 0 5px 20px rgba(0,0,0,0.08); /* Легкая тень */ 
     border-left: 4px solid #667eea; /* Синяя полоса слева */ 
-    transition: transform 0.3s ease; /* Плавная анимация трансформации */ 
-    width:100% ;
-}
-.news-title{
-    font-size: 28px;
-    color:#2c3e50;
 
 }
+.news-section{
+    display: grid;
+    gap: 20px; 
+
+}
+
+
 
 .news-date{
     font-size: 14px;
@@ -198,28 +215,30 @@ body {
 /* ==== КОНТАКТЫ ==== */
 
 /* ТОВАРЫ */
+.goods-section{
+    max-width: 1200px;
+    margin:0 auto;
+}
 .goods-title{
     font-size: 30px; 
-    margin-bottom: 10px; 
-    font-weight: 300; 
+    margin-bottom: 10px;  
     text-align: center;
-    margin-bottom: 50px;
 }
 
 .goods-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) ;
-    gap: 20px;
-    width: 100%;    
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
 }
         
 .goods-card {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 15px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
 }
         
 .goods-card:hover {
@@ -228,11 +247,11 @@ body {
 }
         
 .goods-card-img {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 250px;
     object-fit: cover;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .goods-price{
@@ -240,18 +259,57 @@ body {
     color: red;
     font-weight: 600;
 }
+.product-discription{
+    color:gray;
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.product-info{
+    padding: 0 10px 15px 10px;
+}
+
+.product-button{
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    width: fit-content;
+    margin: 30px auto;
+    display: block;
+    color: white;
+    padding: 12px 24px;
+    border:none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.product-button:active{
+    transform: translateY(5px);
+}
+
+.contacts-container{
+    text-align: center;
+}
 
 .contacts-block{
     background: white; 
-    padding: 50px; /* Внутренние отступы */ 
-    margin: 50px 0; /* Вертикальные отступы */ 
-    border-radius: 10px; /* Скругленные углы */ 
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08); /* Легкая тень */   
+    padding: 50px; 
+    margin: 50px 0; 
+    border-radius: 20px; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);    
+}
+
+.contacts-info{
+    background: linear-gradient(135deg, #ffffff 0%, #e3e7ea 100%);
+    padding: 25px; 
+    margin: 20px 0; 
+    border-radius: 12px; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+    border-left: 4px solid #667eea;  
+ 
 }
 
 
 
-.contacts-button{
+button{
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     width: fit-content;
     margin: 30px auto;
@@ -267,6 +325,38 @@ body {
     transform: translateY(5px);
 }
 
+dialog { 
+    padding: 1.25rem; 
+    border: none; 
+    border-radius: 12px;
+}
+
+dialog::backdrop { 
+    background: rgba(0,0,0,.5); 
+}
+.form-actions { 
+    display: flex; 
+    gap: .5rem; 
+    margin-top: 1rem; 
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
 
 
 /* ===== ФУТЕР ===== */
@@ -275,4 +365,23 @@ body {
     color: white; /* Белый цвет текста */ 
     text-align: center; /* Выравнивание по центру */ 
     padding: 30px; /* Внутренние отступы */ 
+    grid-area: footer; 
+} 
+
+/* ===== АДАПТИВНОСТЬ ===== */
+ /* Новое: Медиа-запросы для мобильных устройств */
+ @media (max-width: 768px) { 
+    .nav-list { 
+        flex-direction: column; 
+        gap: 10px; 
+    } 
+    .skills-grid { 
+        grid-template-columns: 1fr; 
+    } 
+    .experience-grid { 
+        grid-template-columns: 1fr; 
+    } 
+    main.content { 
+        padding: 20px; 
+    } 
 } 

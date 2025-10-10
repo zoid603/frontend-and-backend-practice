@@ -9,9 +9,11 @@
     <body>
         <div class="page-container">
 
-            <div class="header">Хэдер</div>
+            <header class="header">
+                <h1>Контакты</h1>
+            </header>
 
-                <div class="nav"> 
+                <nav class="nav"> 
 
                 <ul class="nav-list"> 
                     <li class="nav-item"><a class="nav-link"  href="../index.html">Главная</a></li> 
@@ -21,14 +23,195 @@
                     <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li> 
                 </ul> 
 
-                </div> 
-                <div class="content">
-            
-                    <p class="contacts-block">Адресс электронной почты: blablabla@mirea.ru</p>
-                    <p class="contacts-block">Адрес: г. Москва ул. Пушкина д. Колотушкина</p>
+            </nav> 
+                <main class="content">
+                    <h2 class="section-title">Контакты</h2>
+                    <section class = "contacts-container">
+                        <section class="contacts-block">
+                            <h3>Адресс электронной почты:</h3>
+                            <p>blablabla@mirea.ru</p>
+                        </section>
+                        
+                        <section class="contacts-block">
+                            <h3>Адрес:</h3>
+                            <p>г. Москва ул. Пушкина д. Колотушкина</p>
+                        </section>
 
-                    <button class="contacts-button" type="button">Позвонить мне</button>
-            </div>
+                        <section class="contacts-info">
+                            <h3>Телефон</h3>
+                            <p>+7 (123) 456-78-90</p>
+
+                        </section>
+
+                        <section class="contacts-info">
+                            <h3>Время работы</h3>
+                            <p>Пн-Пт: 8:00-18:00</p>
+
+                        </section>
+                
+                        <button id="openDialog" type="button">Связаться с нами</button>
+
+                            <dialog id="contactDialog" aria-labelledby="dialogTitle">
+                            <h2 id="dialogTitle">Обратная связь</h2>
+
+                            <form id="contactForm" method="dialog" novalidate>
+                                <div class="form-group">
+                                    <label for="name">Имя</label>
+                                    <input id="name" name="name" type="text" required minlength="2" autocomplete="given-name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input id="email" name="email" type="email" required placeholder="example@example.ru">
+                                </div>
+
+                                <div class="form-group"> 
+                                    <label for="phone">Телефон</label>
+                                    <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                                    aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__"
+                                    required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
+                                    <small id="phoneHelp">Формат: +7 (900) 000-00-00</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date">Дата</label>
+                                    <input id="date" name="date" type="date">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="topic">Тема</label>
+                                    <select id="topic" name="topic" required>
+                                        <option value="">Выберите тему</option>
+                                        <option value="question">Вопрос</option>
+                                        <option value="order">Заказ</option>
+                                        <option value="other">Другое</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="message">Сообщение</label>
+                                    <textarea id="message" name="message" rows="4" required></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" id="closeDialog">Закрыть</button>
+                                    <button type="submit">Отправить</button>
+                                </div>
+                            </form>
+                        </dialog>
+
+                    </section>
+                </main>
+
+            <script>
+                // Элементы модального окна
+                const dlg = document.getElementById('contactDialog');
+                const openBtn = document.getElementById('openDialog');
+                const closeBtn = document.getElementById('closeDialog');
+                const form = document.getElementById('contactForm');
+                let lastActive = null;
+
+                // Открытие модалки
+                openBtn.addEventListener('click', () => {
+                    lastActive = document.activeElement;
+                    dlg.showModal(); // модальный режим + затемнение
+                    dlg.querySelector('input,select,textarea,button')?.focus();
+                });
+
+                // Закрытие модалки
+                closeBtn.addEventListener('click', () => dlg.close('cancel'));
+
+                // Валидация формы
+                form?.addEventListener('submit', (e) => {
+                // 1) Сброс кастомных сообщений
+                    [...form.elements].forEach(el => el.setCustomValidity?.(''));
+
+                    // 2) Проверка встроенных ограничений
+                    if (!form.checkValidity()) {
+                        e.preventDefault();
+
+                        // Пример: таргетированное сообщение
+                        const email = form.elements.email;
+                        if (email?.validity.typeMismatch) {
+                            email.setCustomValidity('Введите корректный e-mail, например name@example.com');
+                        }
+
+                        form.reportValidity(); // показать браузерные подсказки
+
+                        // Ally: подсветка проблемных полей
+                        [...form.elements].forEach(el => {
+                            if (el.willValidate) el.toggleAttribute('aria-invalid', !el.checkValidity());
+                        });
+                        return;
+                    }
+
+                    // 3) Успешная «отправка» (без сервера)
+                    e.preventDefault();
+                    // Если форма внутри <dialog>, закрываем окно:
+                    document.getElementById('contactDialog').close('success');
+                    form.reset();
+                });
+
+                // Возврат фокуса после закрытия
+                dlg.addEventListener('close', () => { 
+                    lastActive?.focus(); 
+                });
+
+                // Лёгкая маска телефона (доп. задание)
+                const phone = document.getElementById('phone');
+
+                phone?.addEventListener('input', () => {
+                    const digits = phone.value.replace(/\D/g,'').slice(0,11); // до 11 цифр
+                    const d = digits.replace(/^8/, '7');    // нормализуем 8 -> 7
+                    const parts = []
+                    if (d.length > 0) parts.push('+7');
+                    if (d.length > 1) parts.push(' (' + d.slice(1,4));
+                    if (d.length >= 4) parts[parts.length - 1] += ')';
+                    if (d.length >= 5) parts.push(' ' + d.slice(4,7));
+                    if (d.length >= 8) parts.push('-' + d.slice(7,9));
+                    if (d.length >= 10) parts.push('-' + d.slice(9,11));
+                    phone.value = parts.join('');
+                });
+
+                // Строгая проверка (если задаёте pattern из JS):
+                phone?.setAttribute('pattern', '^\\+7 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}$');
+
+
+                // Функция для отправки формы 
+                function submitForm() { 
+                const form = document.getElementById('feedbackForm'); 
+                const formData = new FormData(form); 
+                // Простая валидация 
+                if (!form.checkValidity()) { 
+                    form.reportValidity(); 
+                    return; 
+                                    } 
+                // Собираем данные формы 
+                const data = { 
+                    name: formData.get('name'), 
+                    phone: formData.get('phone'), 
+                    email: formData.get('email'), 
+                    category: formData.get('category'), 
+                    message: formData.get('message') 
+                }; // В реальном приложении здесь был бы AJAX-запрос 
+                console.log('Данные формы:', data); // Показываем уведомление об успешной отправке 
+                alert('Спасибо! Ваше обращение отправлено. Мы свяжемся с вами в ближайшее время.'); // Закрываем модальное окно 
+                contactModal.close(); 
+                // Очищаем форму 
+                form.reset(); 
+                } 
+                // Закрытие модального окна по клику на фон 
+                document.getElementById('contactModal').addEventListener('click', 
+                function(event) { 
+                if (event.target === this) { 
+                    this.close(); 
+                } 
+                }); 
+                // Обработка отправки формы через Enter (предотвращаем стандартное 
+                document.getElementById('feedbackForm').addEventListener('keypress', function(event){ 
+                    if (event.key === 'Enter' && event.target.type !== 'textarea') { 
+                        event.preventDefault(); 
+                    } 
+                });
+            </script>
         </div> 
         <div class="footer">Футер</div>
         

@@ -8,44 +8,66 @@
     </head>
     <body>
         <div class="page-container">
-        <div class="header">Хэдер</div>
-            <div class="nav"> 
+        <header class="header">
+            <h1>Товары</h1>
+        </header>
+            <nav class="nav"> 
 
-            <ul class="nav-list"> 
-                <li class="nav-item"><a class="nav-link"  href="../index.html">Главная</a></li> 
-                <li class="nav-item"><a class="nav-link"  href="news.html">Новости</a></li> 
-                <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>  
-                <li class="nav-item"><a class="nav-link"  href="goods.html">Товары</a></li> 
-                <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li> 
-            </ul> 
+                <ul class="nav-list"> 
+                    <li class="nav-item"><a class="nav-link"  href="../index.html">Главная</a></li> 
+                    <li class="nav-item"><a class="nav-link"  href="news.html">Новости</a></li> 
+                    <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li>  
+                    <li class="nav-item"><a class="nav-link"  href="goods.html">Товары</a></li> 
+                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li> 
+                </ul> 
 
-            </div> 
+            </nav> 
 
-            <div class="content">
-                <h1 class="goods-title">Наши товары</h1>
-                <div class="goods-grid">
-                    <div class="goods-card">
-                        <img class="goods-card-img" src="../images/img1.jpg" alt="Фото товара1" width="120"  height="150">
-                        <p>Товар1</p>
-                        <p class="goods-price">Цена товара1</p>
+            <main class="content">
+                <section class="goods-section">
+
+                    <h2 class="section-title">Каталог товаров</h2>
+
+                    <div class="goods-grid">
+                        <article class="goods-card">
+                            <img class="goods-card-img" src="../images/img1.jpg" alt="Фото товара1">
+                            <div class="product-info">
+                                <h3 class="product-name" >Микроволновка</h3>
+                                <p class="product-description"> Хорошая микроволновка, очень хорошая микроволновка</p>
+                                <p class="goods-price">24 990Р</p>
+                                <button class="product-button">Купить</button>
+                            </div>
+                        </article>
+                        
+                    <div class="goods-grid">
+                        <article class="goods-card">
+                                <img class="goods-card-img" src="../images/img2.jpg" alt="Фото товара2">
+                                <div class="product-info">
+                                <h3 class="product-name">Тарелка с фруктами</h3>
+                                <p class="product-description">Фрукты там... Ягоды</p>
+                                <p class="goods-price">1 699Р</p>
+                                <button class="product-button">Купить</button>
+                            </div>
+                        </article>
                     </div>
-                    
-                    <div class="goods-card">
-                        <img class="goods-card-img" src="../images/img2.jpg" alt="Фото товара2" width="120"  height="150">
-                        <p>Товар2</p>
-                        <p class="goods-price">Цена товара2</p>
+
+                        <article class="goods-card">
+                                <img class="goods-card-img" src="../images/img3.jpg" alt="Фото товара3">
+                                <div class="product-info">
+                                <h3 class="product-name">Эгида</h3>
+                                <p class="product-description">Эгида</p>
+                                <p class="goods-price">1 Int</p>
+                                <button class="product-button">Купить</button>
+                            </div>
+                        </article>
+
                     </div>
+                </section>
+            </main>
 
-                    <div class="goods-card">
-                        <img class="goods-card-img" src="../images/img3.jpg" alt="Фото товара3" width="120"  height="150">
-                        <p>Товар3</p>
-                        <p class="goods-price">Цена товара3</p>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="footer">Футер</div> 
+            <footer class="footer">
+                <p>Футер</p>
+            </footer> 
         </div>
         
     </body>
